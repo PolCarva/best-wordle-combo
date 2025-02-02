@@ -39188,7 +39188,6 @@ let words = [
   "\u00f1uzco",
   "\u00f1uzcos"
 ]
-
 const filteredWords = filterUnwantedWords(words);
 
 function filterUnwantedWords(words) {
@@ -39198,7 +39197,7 @@ function filterUnwantedWords(words) {
   );
 }
 
-function filtrarPalabrasConUnaSolaVocal(words) {
+function filterWordsWithOneVowel(words) {
   return words.filter((word) => {
     const vowels = "aeiou";
     const uniqueVowels = new Set(
@@ -39225,18 +39224,18 @@ function copyWordsWithFiveLettersAsArray() {
 }
 
 function copyWordsWithOneVowel() {
-  const wordsWithOneVowel = filtrarPalabrasConUnaSolaVocal(filteredWords);
+  const wordsWithOneVowel = filterWordsWithOneVowel(filteredWords);
   // copiar al portapapeles como texto plano con 1 palabra por línea (solo 1 vocal)
   navigator.clipboard.writeText(wordsWithOneVowel.join("\n"));
 }
 
 document
-  .querySelector("#linea")
+  .querySelector("#line")
   .addEventListener("click", copyWordsWithFiveLetters);
 document
   .querySelector("#array")
   .addEventListener("click", copyWordsWithFiveLettersAsArray);
 
 document
-  .querySelector("#vocal")
+  .querySelector("#vowel")
   .addEventListener("click", copyWordsWithOneVowel);

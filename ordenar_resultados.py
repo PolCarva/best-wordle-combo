@@ -10,16 +10,16 @@ except FileNotFoundError:
     exit()
 
 # Contar la frecuencia de cada letra en todas las palabras
-letra_contador = Counter("".join(words))
+letter_counter = Counter("".join(words))
 
 # Calcular el total de letras en el archivo
-total_letras = sum(letra_contador.values())
+total_letters = sum(letter_counter.values())
 
 # Generar la tabla de frecuencia en porcentaje
-letra_frecuencia = {letra.upper(): (cantidad / total_letras) * 100 for letra, cantidad in letra_contador.items()}
+letter_frequency = {letter.upper(): (count / total_letters) * 100 for letter, count in letter_counter.items()}
 
 print("Tabla de frecuencia de letras actualizada a partir de wordleWords.txt:")
-print(letra_frecuencia)
+print(letter_frequency)
 
 # 📌 2️⃣ Cargar el archivo de tríos de palabras
 try:
@@ -29,16 +29,16 @@ except FileNotFoundError:
     exit()
 
 # 📌 3️⃣ Función para calcular la probabilidad de cada trío basado en la frecuencia real
-def calcular_probabilidad(trio):
-    letras_unicas = set("".join(trio).upper())  # Convertir a mayúsculas y obtener letras únicas
-    return sum(letra_frecuencia.get(letra, 0) for letra in letras_unicas)  # Sumar probabilidades
+def calculate_probability(trio):
+    unique_letters = set("".join(trio).upper())  # Convertir a mayúsculas y obtener letras únicas
+    return sum(letter_frequency.get(letter, 0) for letter in unique_letters)  # Sumar probabilidades
 
 # 📌 4️⃣ Calcular la probabilidad de cada trío y ordenar
-df["Probabilidad"] = df.apply(lambda row: calcular_probabilidad([row["Palabra 1"], row["Palabra 2"], row["Palabra 3"]]), axis=1)
-df_ordenado = df.sort_values(by="Probabilidad", ascending=False)
+df["Probabilidad"] = df.apply(lambda row: calculate_probability([row["Palabra 1"], row["Palabra 2"], row["Palabra 3"]]), axis=1)
+df_sorted = df.sort_values(by="Probabilidad", ascending=False)
 
 # 📌 5️⃣ Guardar en un nuevo CSV ordenado
-df_ordenado.to_csv("resultados_ordenados.csv", index=False)
+df_sorted.to_csv("resultados_ordenados.csv", index=False)
 
 print("\n✅ Resultados ordenados guardados en 'resultados_ordenados.csv'")
-print(f"📊 Se ordenaron {len(df_ordenado)} combinaciones en función de la frecuencia real de letras en wordleWords.txt.")
+print(f"📊 Se ordenaron {len(df_sorted)} combinaciones en función de la frecuencia real de letras en wordleWords.txt.")
